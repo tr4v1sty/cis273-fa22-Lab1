@@ -31,14 +31,14 @@ namespace KthToLast
             Tail = null;
         }
 
-        public DoublyLinkedListNode<T> Head { get; set; }
-        public DoublyLinkedListNode<T> Tail { get; set; }
+        public DoublyLinkedListNode<T?> Head { get; set; }
+        public DoublyLinkedListNode<T?> Tail { get; set; }
 
         public T? First => IsEmpty ? default(T) : Head.Data;
 
         public T? Last => IsEmpty ? default(T) : Tail.Data;
 
-        public bool IsEmpty => Length == 0;
+        public bool IsEmpty => Head == null || Tail == null;
 
         // Length is not accessible so you have to use length
         private int length = 0;
@@ -144,34 +144,38 @@ namespace KthToLast
 
         public void InsertAfter(T newValue, T existingValue)
         {
-            // traverse
-
-            var currentNode = Head;
-
-            while (currentNode != null)
+            var newNode = new DoublyLinkedListNode<T>(newValue);
+            var curNode = Head;
+            while (curNode != null)
             {
-
-                if (currentNode.Data.Equals(existingValue))
+                if (IsEmpty)
                 {
-                    //insert new node
-
-                    var newNode = new LinkedListNode<T>(newValue);
-
-                    newNode.Next = currentNode.Next;
-                    currentNode.Next = newNode;
-
-
-                    if (currentNode == Tail)
-                    {
-                        Tail = currentNode.Next;
-                    }
-
+                    Head = newNode;
+                    Tail = newNode;
                     length++;
-
                 }
-
-                currentNode = currentNode.Next;
+                if (curNode.Data.Equals(existingValue))
+                {
+                    if (curNode == Tail)
+                    {
+                        curNode.Next = newNode;
+                        Tail = newNode;
+                        length++;
+                        return;
+                    }
+                    else
+                    {
+                        newNode.Next = curNode.Next;
+                        curNode.Next = newNode;
+                        length++;
+                        return;
+                    }
+                }
+                curNode = curNode.Next;
             }
+            Append(newValue);
+            length++;
+
         }
 
         public void InsertAt(T value, int index)
