@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Security.Cryptography;
+
 namespace Polynomial
 {
 	public class Polynomial
@@ -50,17 +53,25 @@ namespace Polynomial
 			return result;
 		}
 
-		static public Polynomial Add(Polynomial Coefficient, Polynomial Power)
-		{ return Add(Coefficient, Power);
+		static public Polynomial Add(Polynomial p1, Polynomial p2)
+		{ 
+			Polynomial sum = new Polynomial();
+
+				// add all the terms from p1 to sum
+				foreach( var term in p1.terms)
 			{
-
-				Polynomial difference = new Polynomial();
-
-				return difference;
-			
-			
+				sum.AddTerm(term.Coefficient, term.Power);
 			}
-		}
+
+
+            // add all the terms from p2 to sum
+            foreach (var term in p2.terms)
+            {
+                sum.AddTerm(term.Coefficient, term.Power);
+            }
+
+			return sum;
+        }
 
 
 
