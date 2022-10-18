@@ -73,25 +73,18 @@ namespace KthToLast
 
         public bool Contains(T value)
         {
-            if (length == 0)
+         
+
+            var curNode = Head;
+            while (curNode != null)
             {
-                return false;
-            }
-
-            // traverse
-
-            var currentNode = Head;
-
-            while (currentNode != null)
-            {
-                if (currentNode.Data.Equals(value))
+                if (curNode.Data.Equals(value))
                 {
                     return true;
                 }
+                curNode = curNode.Next;
 
-                currentNode = currentNode.Next;
             }
-
             return false;
         }
 
@@ -101,9 +94,9 @@ namespace KthToLast
 
             var currentNode = Head;
 
-            while(currentNode!=null)
+            while (currentNode != null)
             {
-                if( currentNode.Data.Equals(value) )
+                if (currentNode.Data.Equals(value))
                 {
                     return index;
                 }
