@@ -52,7 +52,7 @@ namespace Polynomial
 			}
 			return result;
 		}
-
+		// DO NOT CHANGE THE initial polynom
 		static public Polynomial Add(Polynomial p1, Polynomial p2)
 		{ 
 			Polynomial sum = new Polynomial();
@@ -78,15 +78,23 @@ namespace Polynomial
 
 		static public Polynomial Subtract(Polynomial p1, Polynomial p2)
 		{
-			 Polynomial inverse = new Polynomial();
-			return inverse;
+			 Polynomial difference = new Polynomial();
+			Add(p1, difference);
+			Add(p2, difference);
+
+			return difference;
 		}
 
 
 
 		 static public Polynomial Negate(Polynomial p)
-		{ 
-			throw new NotImplementedException();
+		{
+			Polynomial inverse = new Polynomial();
+			foreach(var term in p.terms)
+			{
+				inverse.AddTerm(term.Coefficient, term.Power);
+			}
+			return inverse;
 		
 		}
 		 static public Polynomial Multiply(Polynomial p1, Polynomial p2) { throw new NotImplementedException(); }

@@ -108,7 +108,7 @@ namespace KthToLast
             return -1;
         }
 
-        public T? Get(int index)
+        public T Get(int index)
         {
             if (index < 0 || index >= length)
             {
@@ -138,33 +138,45 @@ namespace KthToLast
         {
 
             // traverse
-            
+            var value = new LinkedListNode<T>(newValue);
             var currentNode = Head;
 
             while (currentNode != null)
             {
+                if (IsEmpty)
+                {
+                    Head = value;
+                    Tail = value;
+                    length++;
+                }
                 
                 if (currentNode.Data.Equals(existingValue))
                 {
-                    //insert new node
-
-                    var newNode = new LinkedListNode<T>(newValue);
-
-                    newNode.Next = currentNode.Next;
-                    currentNode.Next = newNode;
-                    
+                   
+                  
 
                     if (currentNode == Tail)
                     {
-                        Tail = currentNode.Next;
+                        currentNode.Next = value;
+                        Tail = value;
+                        length++;
+                        return;
                     }
 
-                    length++;
+                    else
+                    {
+                        value.Next = currentNode.Next;
+                        currentNode.Next = value;
+                        length++;
+                        return;
+                    }
                     
                 }
 
                 currentNode = currentNode.Next;                
           }
+            Append(newValue);
+            length++;
         }
 
         public void InsertAt(T value, int index)
@@ -355,20 +367,16 @@ namespace KthToLast
         {
             var reversedList = new LinkedList<T>();
 
-            int index = 0;
+            
             var currentNode = Head;
-            int currentIndex = 0;
 
-            while (index != length + 1)
+
+            while (currentNode != null)
             {
-                if (currentIndex == index)
-                {
-                    Prepend(currentNode.Data);
-                }
-                index++;
+                reversedList.Prepend(currentNode.Data);
                 currentNode = currentNode.Next;
-                currentIndex++;
             }
+            return reversedList;
 
             return reversedList;
         }
@@ -393,7 +401,12 @@ namespace KthToLast
         // TODO 
         public T KthToLast(int k)
         {
-            return default(T);
+            if (k == 0)
+            {
+                return Tail.Data;
+            }
+            IList<T> reversedList = Reverse();
+            return reversedList.Get(k);
         }
     }
 }
