@@ -20,7 +20,12 @@ namespace Polynomial
 		}
 		public void AddTerm(double coeff, int power)
 		{
-			var currentnode = terms.First;
+            if (coeff == 0)
+            {
+                return;
+            }
+
+            var currentnode = terms.First;
 			while (currentnode != null)
 			{
 				//check power
@@ -45,12 +50,20 @@ namespace Polynomial
 
 		public override string ToString()
 		{
-			string result = "";
+            if (terms.Count == 0)
+            {
+                return "0";
+            }
+
+            string result = "";
+
 			foreach (var term in terms)
 			{
+
 				result += term.ToString() + " + ";
 			}
-			return result;
+            result = result.Remove(result.LastIndexOf('+'));
+            return result;
 		}
 		// DO NOT CHANGE THE initial polynom
 		static public Polynomial Add(Polynomial p1, Polynomial p2)
@@ -70,6 +83,8 @@ namespace Polynomial
                 sum.AddTerm(term.Coefficient, term.Power);
             }
 
+			
+
 			return sum;
         }
 
@@ -79,8 +94,14 @@ namespace Polynomial
 		static public Polynomial Subtract(Polynomial p1, Polynomial p2)
 		{
 			 Polynomial difference = new Polynomial();
-			Add(p1, difference);
-			Add(p2, difference);
+			foreach(var term in p1.terms)
+			{
+				difference.AddTerm(-term.Coefficient , term.Power);
+			}
+			foreach (var term in p2.terms)
+			{
+				difference.AddTerm(-term.Coefficient, term.Power);
+			}
 
 			return difference;
 		}
