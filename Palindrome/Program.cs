@@ -15,12 +15,28 @@ public class Program
 
     public static bool IsPalindrome<T>(LinkedList<T> linkedList)
     {
-        // are the first and last items the same?
-
-        // if so, move toward the middle 
-
-
-        return true;
+        // if its just one character clearly its gonna be the same forwards and backwards
+        if (linkedList.Count == 1)
+        {
+            return true;
+        }
+        // Setting
+        int count = 0;
+        var curNode = linkedList.First;
+        var lastNode = linkedList.Last;
+        // Node on top must equal the last node
+        while (curNode.Value.Equals(lastNode.Value))
+        {
+            curNode = curNode.Next;
+            lastNode = lastNode.Previous;
+            count++;
+            if (count == linkedList.Count / 2)
+            {
+                return true;
+            }
+            
+        }
+        return false;
     }
 }
 
