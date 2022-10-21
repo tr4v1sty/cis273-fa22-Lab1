@@ -272,14 +272,12 @@ namespace KthToLast
                 return;
             }
 
-            // Remove non-head node
 
             var currentNode = Head;
 
             while (currentNode != null)
             {
-                // if you already find the node htat needs to be removed, you cannot change the one before 
-                //you cannot go backwards
+                
                 if(currentNode.Next != null && currentNode.Next.Data.Equals(value))
                 {
                     var nodeToDelete = currentNode.Next;
@@ -315,11 +313,10 @@ namespace KthToLast
             if (Head.Data.Equals(index))
             {
 
-                //1-element list
+                
                 if (Head == Tail)
                 {
                     Tail = null;
-                    //Head = null;
                 }
 
                 else
@@ -336,29 +333,22 @@ namespace KthToLast
 
             while (currentNode != null)
             {
-                // if you already find the node htat needs to be removed, you cannot change the one before 
-                //you cannot go backwards
+                
                 if (currentNode != null && currentNode.Data.Equals(index))
                 {
                     var nodeToDelete = currentNode;
-
                     if (nodeToDelete == Tail)
                     {
                         currentNode.Next = null;
                         Tail = currentNode;
                     }
-
                     else
                     {
                         currentNode.Next = nodeToDelete.Next;
-
                         nodeToDelete.Next = null;
-
                     }
-
                     return;
                 }
-
                 currentNode = currentNode.Next;
             }
         }
@@ -366,11 +356,7 @@ namespace KthToLast
         public IList<T> Reverse()
         {
             var reversedList = new LinkedList<T>();
-
-            
             var currentNode = Head;
-
-
             while (currentNode != null)
             {
                 reversedList.Prepend(currentNode.Data);
@@ -401,11 +387,15 @@ namespace KthToLast
         // TODO 
         public T KthToLast(int k)
         {
-            if (k == 0)
+            var curNode = Tail;
+
+            for (int i = 0; i > k; i--)
             {
-                return Tail.Data;
+                return curNode.Data; 
             }
+
             IList<T> reversedList = Reverse();
+
             return reversedList.Get(k);
         }
     }
